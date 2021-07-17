@@ -1,6 +1,7 @@
 package kg.baiysh.TemplateForTheProject.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
@@ -17,10 +18,6 @@ import java.util.UUID;
 public class ToDo {
     @NotNull
     @Id
-
-//    @GeneratedValue(generator = "uuid")
-//    @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
-
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(columnDefinition = "BINARY(16)")
@@ -28,8 +25,10 @@ public class ToDo {
     @NotNull
     @NotBlank
     private String description;
-    @Column(insertable = true, updatable = false)
+    @JsonFormat(pattern="dd.MM.yyyy HH:mm:ss")
+    @Column(updatable = false)
     private LocalDateTime created;
+    @JsonFormat(pattern="dd.MM.yyyy HH:mm:ss")
     private LocalDateTime modified;
     private boolean completed;
 
