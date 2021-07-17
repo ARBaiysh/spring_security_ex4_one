@@ -4,6 +4,7 @@ import kg.baiysh.TemplateForTheProject.config.jwt.JwtProvider;
 import kg.baiysh.TemplateForTheProject.domain.UserEntity;
 import kg.baiysh.TemplateForTheProject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,14 +32,17 @@ public class AuthController {
             String token = jwtProvider.generateToken(userEntity.getLogin());
             return new AuthResponse(token);
         }
-        return  new AuthResponse("!!! login " + registrationRequest.getLogin() + " already taken");
+        return new AuthResponse("!!! login " + registrationRequest.getLogin() + " already taken");
     }
 
     @PostMapping("/auth")
-    public AuthResponse auth(@RequestBody AuthRequest request) {
+    public ResponseEntity<?> auth(@RequestBody AuthRequest request) {
         UserEntity userEntity = userService.findByLoginAndPassword(request.getLogin(), request.getPassword());
-        String token = jwtProvider.generateToken(userEntity.getLogin());
-        return new AuthResponse(token);
+        if (userEntity != null) {
+            String token = jwtProvider.generateToken(userEntity.getLogin());
+            return ResponseEntity.ok(new AuthResponse(token));
+        }
+        return ResponseEntity.badRequest().build();
     }
 }
 
