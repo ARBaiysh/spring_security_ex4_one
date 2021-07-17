@@ -34,7 +34,7 @@ public class AuthController {
             String token = jwtProvider.generateToken(userEntity.getLogin());
             return new AuthResponse(token);
         }
-        return new AuthResponse("!!! login " + registrationRequest.getLogin() + " already taken baiyshqweK");
+        return new AuthResponse("!!! login " + registrationRequest.getLogin() + " already taken");
     }
 
     @PostMapping("/auth")
