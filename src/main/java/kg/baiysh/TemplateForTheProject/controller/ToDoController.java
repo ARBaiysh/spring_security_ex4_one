@@ -1,6 +1,5 @@
 package kg.baiysh.TemplateForTheProject.controller;
 
-
 import kg.baiysh.TemplateForTheProject.domain.ToDo;
 import kg.baiysh.TemplateForTheProject.domain.ToDoBuilder;
 import kg.baiysh.TemplateForTheProject.service.ToDoService;
@@ -11,11 +10,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.net.URI;
 import java.security.Principal;
 import java.util.Optional;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api")
@@ -42,7 +42,7 @@ public class ToDoController {
 
     @GetMapping("/todo/{id}")
     @PreAuthorize(value = "hasRole('USER') or hasRole('ADMIN')")
-    public ResponseEntity<ToDo> getToDoById(@PathVariable UUID id) {
+    public ResponseEntity<ToDo> getToDoById(@PathVariable String id) {
         Optional<ToDo> toDo = toDoService.findById(id);
         return toDo.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
@@ -55,8 +55,17 @@ public class ToDoController {
 
     @PostMapping("/todo/{id}")
     @PreAuthorize(value = "hasRole('ADMIN')")
-    public ResponseEntity setCompleted(@PathVariable UUID id) {
-        return toDoService.setCompleted(id);
+    public ResponseEntity<ToDo> setCompleted(@PathVariable String id){
+        Optional<ToDo> toDo = toDoService.findById(id);
+        if(toDo.isEmpty())
+            return ResponseEntity.notFound().build();
+        ToDo result = toDo.get();
+        result.setCompleted(true);
+        toDoService.save(result);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().
+                buildAndExpand(result.getId()).toUri();
+        return ResponseEntity.ok().header("Location",location.toString()).
+                build();
     }
 
     @DeleteMapping("/todo/{id}")

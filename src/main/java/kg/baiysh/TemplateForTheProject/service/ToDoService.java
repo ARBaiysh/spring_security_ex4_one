@@ -2,18 +2,21 @@ package kg.baiysh.TemplateForTheProject.service;
 
 import kg.baiysh.TemplateForTheProject.domain.ToDo;
 import kg.baiysh.TemplateForTheProject.repository.ToDoRepository;
+import kg.baiysh.TemplateForTheProject.validation.ToDoValidationError;
 import kg.baiysh.TemplateForTheProject.validation.ToDoValidationErrorBuilder;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 @Slf4j
@@ -38,23 +41,23 @@ public class ToDoService {
         return toDoRepository.save(toDo);
     }
 
-    public Optional<ToDo> findById(UUID id) {
+    public Optional<ToDo> findById(String id) {
         return toDoRepository.findById(id);
     }
 
-    public void delete(ToDo build) {
-        toDoRepository.delete(build);
+    public void delete(ToDo toDo) {
+        toDoRepository.delete(toDo);
     }
-    public ResponseEntity setCompleted(UUID id){
-        Optional<ToDo> toDo = findById(id);
-        if (toDo.isEmpty()) {
-            return ResponseEntity.notFound().build();
+
+    public boolean setCompleted(String id) {
+        if(!toDoRepository.existsById(id)) {
+            return false;
         }
-        ToDo result = toDo.get();
-        result.setCompleted(true);
-        save(result);
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(result.getId()).toUri();
-        return ResponseEntity.ok().header("Location", location.toString()).build();
+        ToDo toDo = findById(id).get();
+        toDo.setCompleted(true);
+        save(toDo);
+        return true;
+
     }
 
     public ResponseEntity<?> createToDo(ToDo toDo, Errors errors, Principal principal) {
@@ -66,5 +69,11 @@ public class ToDoService {
         log.info(">>> Save ToDo :" + result + ", created user: " + principal.getName());
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(result.getId()).toUri();
         return ResponseEntity.created(location).build();
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    public ToDoValidationError handleException(Exception exception) {
+        return new ToDoValidationError(exception.getMessage());
     }
 }

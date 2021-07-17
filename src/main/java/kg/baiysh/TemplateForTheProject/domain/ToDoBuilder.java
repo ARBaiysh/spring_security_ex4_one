@@ -1,10 +1,9 @@
 package kg.baiysh.TemplateForTheProject.domain;
 
-import java.util.UUID;
 
 public class ToDoBuilder {
     private static ToDoBuilder instance = new ToDoBuilder();
-    private UUID id = null;
+    private String id = null;
     private String description = "";
 
     private ToDoBuilder() {
@@ -20,7 +19,7 @@ public class ToDoBuilder {
     }
 
     public ToDoBuilder withId(String id) {
-        this.id = UUID.fromString(id);
+        this.id = id;
         return instance;
     }
 

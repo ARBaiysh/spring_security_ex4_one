@@ -7,15 +7,16 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
+
 
 @Repository
-public interface ToDoRepository extends JpaRepository<ToDo, UUID> {
+public interface ToDoRepository extends JpaRepository<ToDo, String> {
 
 //    @Query(value = "CALL GET_TODOS_BY_COMPLETED(:completed);", nativeQuery = true)
 //    List<ToDo> findByCompleted(@Param("completed") Integer completed);
 
     List<ToDo> findByCompleted(Boolean completed);
-    Optional<ToDo> findById(UUID id);
+    Optional<ToDo> findById(String id);
+    boolean existsById(String id);
 
 }

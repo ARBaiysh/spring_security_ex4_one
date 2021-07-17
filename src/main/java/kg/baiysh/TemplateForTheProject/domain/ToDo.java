@@ -10,7 +10,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.util.UUID;
+
 
 @Entity
 @Data
@@ -18,10 +18,9 @@ import java.util.UUID;
 public class ToDo {
     @NotNull
     @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(columnDefinition = "BINARY(16)")
-    private UUID id;
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    private String id;
     @NotNull
     @NotBlank
     private String description;
