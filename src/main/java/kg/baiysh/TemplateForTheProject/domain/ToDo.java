@@ -25,10 +25,10 @@ public class ToDo {
     @NotNull
     @NotBlank
     private String description;
-    @JsonFormat(pattern="dd.MM.yyyy HH:mm:ss")
+    @JsonFormat(pattern = "dd.MM.yyyy HH:mm:ss")
     @Column(updatable = false)
     private LocalDateTime created;
-    @JsonFormat(pattern="dd.MM.yyyy HH:mm:ss")
+    @JsonFormat(pattern = "dd.MM.yyyy HH:mm:ss")
     private LocalDateTime modified;
     private boolean completed;
 

@@ -20,4 +20,3 @@ public class CustomUserDetailsService implements UserDetailsService {
         return CustomUserDetails.fromUserEntityToCustomUserDetails(userEntity);
     }
 }
-

@@ -42,6 +42,7 @@ public class UserController {
         List<UserEntity> userEntityList = userService.findByAll();
         return ResponseEntity.ok(userEntityList);
     }
+
     @ExceptionHandler
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public ToDoValidationError handleException(Exception exception) {

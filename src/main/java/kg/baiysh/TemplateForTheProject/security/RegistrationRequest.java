@@ -2,7 +2,6 @@ package kg.baiysh.TemplateForTheProject.security;
 
 
 import lombok.Data;
-
 import javax.validation.constraints.NotEmpty;
 
 @Data
