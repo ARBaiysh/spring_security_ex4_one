@@ -1,9 +1,11 @@
 package kg.baiysh.TemplateForTheProject.controller;
 
+import jdk.jshell.Snippet;
 import kg.baiysh.TemplateForTheProject.config.jwt.JwtProvider;
 import kg.baiysh.TemplateForTheProject.domain.UserEntity;
 import kg.baiysh.TemplateForTheProject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -42,7 +44,7 @@ public class AuthController {
             String token = jwtProvider.generateToken(userEntity.getLogin());
             return ResponseEntity.ok(new AuthResponse(token));
         }
-        return ResponseEntity.badRequest().build();
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 }
 
