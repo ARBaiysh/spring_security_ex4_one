@@ -42,7 +42,7 @@ public class AuthController {
         UserEntity userEntity = userService.findByLoginAndPassword(request.getLogin(), request.getPassword());
         if (userEntity != null) {
             String token = jwtProvider.generateToken(userEntity.getLogin());
-            return ResponseEntity.ok(new AuthResponse(token));
+            return ResponseEntity.ok(new AuthResponse("Bearer " + token));
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
