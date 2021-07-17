@@ -3,7 +3,7 @@ package kg.baiysh.TemplateForTheProject.security.jwt;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +12,7 @@ import java.time.ZoneId;
 import java.util.Date;
 
 @Component
-@Log
+@Slf4j
 public class JwtProvider {
 
     @Value("${jwt.secret}")
@@ -34,7 +34,7 @@ public class JwtProvider {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
             return true;
         } catch (Exception e) {
-            log.severe("invalid token");
+            log.error("invalid token");
         }
         return false;
     }

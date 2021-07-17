@@ -47,4 +47,9 @@ public class ToDo {
     void onUpdate() {
         this.setModified(LocalDateTime.now());
     }
+
+    @Override
+    public String toString() {
+        return "ToDo :" + id + ": " + description + ": " + created + ": " + modified + ": " + completed;
+    }
 }

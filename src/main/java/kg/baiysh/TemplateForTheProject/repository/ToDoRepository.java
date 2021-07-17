@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -15,4 +16,6 @@ public interface ToDoRepository extends JpaRepository<ToDo, UUID> {
 //    List<ToDo> findByCompleted(@Param("completed") Integer completed);
 
     List<ToDo> findByCompleted(Boolean completed);
+    Optional<ToDo> findById(UUID id);
+
 }
