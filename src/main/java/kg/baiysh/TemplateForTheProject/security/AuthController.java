@@ -16,7 +16,6 @@ public class AuthController {
     private final UserService userService;
     private final JwtProvider jwtProvider;
 
-    @Autowired
     public AuthController(UserService userService, JwtProvider jwtProvider) {
         this.userService = userService;
         this.jwtProvider = jwtProvider;

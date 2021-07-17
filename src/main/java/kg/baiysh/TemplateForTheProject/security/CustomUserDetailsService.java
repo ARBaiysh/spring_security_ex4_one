@@ -1,7 +1,6 @@
 package kg.baiysh.TemplateForTheProject.security;
 
 import kg.baiysh.TemplateForTheProject.domain.UserEntity;
-import kg.baiysh.TemplateForTheProject.security.CustomUserDetails;
 import kg.baiysh.TemplateForTheProject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class CustomUserDetailsService implements UserDetailsService {
     private final UserService userService;
-    @Autowired
+
     public CustomUserDetailsService(UserService userService) {
         this.userService = userService;
     }
