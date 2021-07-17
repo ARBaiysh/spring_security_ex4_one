@@ -2,18 +2,22 @@ package kg.baiysh.TemplateForTheProject.controller;
 
 import kg.baiysh.TemplateForTheProject.domain.UserEntity;
 import kg.baiysh.TemplateForTheProject.service.UserService;
+import kg.baiysh.TemplateForTheProject.validation.ToDoValidationError;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
-public class TestSecurityController {
+public class UserController {
     private final UserService userService;
 
-    public TestSecurityController(UserService userService) {
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
@@ -37,5 +41,10 @@ public class TestSecurityController {
     public ResponseEntity<?> getUsers() {
         List<UserEntity> userEntityList = userService.findByAll();
         return ResponseEntity.ok(userEntityList);
+    }
+    @ExceptionHandler
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    public ToDoValidationError handleException(Exception exception) {
+        return new ToDoValidationError(exception.getMessage());
     }
 }

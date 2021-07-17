@@ -1,4 +1,4 @@
-package kg.baiysh.TemplateForTheProject.security;
+package kg.baiysh.TemplateForTheProject.security.config;
 
 import kg.baiysh.TemplateForTheProject.security.jwt.JwtFilter;
 import org.springframework.beans.factory.annotation.Autowired;

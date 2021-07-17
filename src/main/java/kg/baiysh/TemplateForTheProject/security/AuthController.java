@@ -3,12 +3,11 @@ package kg.baiysh.TemplateForTheProject.security;
 import kg.baiysh.TemplateForTheProject.security.jwt.JwtProvider;
 import kg.baiysh.TemplateForTheProject.domain.UserEntity;
 import kg.baiysh.TemplateForTheProject.service.UserService;
+import kg.baiysh.TemplateForTheProject.validation.ToDoValidationError;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -25,16 +24,17 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public AuthResponse registerUser(@RequestBody @Valid RegistrationRequest registrationRequest) {
+    public ResponseEntity<?> registerUser(@RequestBody @Valid RegistrationRequest registrationRequest) {
         if (!userService.existsByLogin(registrationRequest.getLogin())) {
             UserEntity userEntity = new UserEntity();
             userEntity.setPassword(registrationRequest.getPassword());
             userEntity.setLogin(registrationRequest.getLogin());
             userService.saveUser(userEntity);
             String token = jwtProvider.generateToken(userEntity.getLogin());
-            return new AuthResponse(token);
+            return ResponseEntity.ok(new AuthResponse(token));
         }
-        return new AuthResponse("!!! login " + registrationRequest.getLogin() + " already taken");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body("!!! login " + registrationRequest.getLogin() + " already taken");
     }
 
     @PostMapping("/auth")
@@ -45,6 +45,12 @@ public class AuthController {
             return ResponseEntity.ok(new AuthResponse("Bearer " + token));
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    public ToDoValidationError handleException(Exception exception) {
+        return new ToDoValidationError(exception.getMessage());
     }
 
 }
