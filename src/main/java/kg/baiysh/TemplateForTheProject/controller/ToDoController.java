@@ -55,17 +55,8 @@ public class ToDoController {
 
     @PostMapping("/todo/{id}")
     @PreAuthorize(value = "hasRole('ADMIN')")
-    public ResponseEntity<ToDo> setCompleted(@PathVariable String id){
-        Optional<ToDo> toDo = toDoService.findById(id);
-        if(toDo.isEmpty())
-            return ResponseEntity.notFound().build();
-        ToDo result = toDo.get();
-        result.setCompleted(true);
-        toDoService.save(result);
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().
-                buildAndExpand(result.getId()).toUri();
-        return ResponseEntity.ok().header("Location",location.toString()).
-                build();
+    public ResponseEntity<ToDo> setCompleted(@PathVariable String id) {
+        return toDoService.setCompleted(id) ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/todo/{id}")
