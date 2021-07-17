@@ -19,7 +19,7 @@ public class ToDo {
     @NotNull
     @Id
     @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
     @NotNull
     @NotBlank
