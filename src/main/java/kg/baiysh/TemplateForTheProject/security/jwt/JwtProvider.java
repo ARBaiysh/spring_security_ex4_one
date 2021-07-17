@@ -1,4 +1,4 @@
-package kg.baiysh.TemplateForTheProject.config.jwt;
+package kg.baiysh.TemplateForTheProject.security.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

@@ -1,4 +1,4 @@
-package kg.baiysh.TemplateForTheProject.config;
+package kg.baiysh.TemplateForTheProject.security;
 
 import kg.baiysh.TemplateForTheProject.domain.UserEntity;
 import org.springframework.security.core.GrantedAuthority;

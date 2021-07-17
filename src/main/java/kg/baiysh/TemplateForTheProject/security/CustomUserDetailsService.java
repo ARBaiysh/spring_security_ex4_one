@@ -1,6 +1,7 @@
-package kg.baiysh.TemplateForTheProject.config;
+package kg.baiysh.TemplateForTheProject.security;
 
 import kg.baiysh.TemplateForTheProject.domain.UserEntity;
+import kg.baiysh.TemplateForTheProject.security.CustomUserDetails;
 import kg.baiysh.TemplateForTheProject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;

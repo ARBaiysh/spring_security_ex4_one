@@ -1,4 +1,4 @@
-package kg.baiysh.TemplateForTheProject.controller;
+package kg.baiysh.TemplateForTheProject.security;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
