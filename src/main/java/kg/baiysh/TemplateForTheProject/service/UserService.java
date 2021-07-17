@@ -34,18 +34,19 @@ public class UserService {
     public UserEntity findByLogin(String login) {
         return userEntityRepository.findByLogin(login);
     }
+
     public List<UserEntity> findByAll() {
         return userEntityRepository.findAll();
     }
 
-    public boolean existsByLogin(String login){
+    public boolean existsByLogin(String login) {
         return userEntityRepository.existsByLogin(login);
     }
 
     public UserEntity findByLoginAndPassword(String login, String password) {
         UserEntity userEntity = findByLogin(login);
         if (userEntity != null) {
-            if (passwordEncoder.matches(password, userEntity.getPassword())) {
+            if (passwordEncoder.matches(password, userEntity.getPassword())){
                 return userEntity;
             }
         }

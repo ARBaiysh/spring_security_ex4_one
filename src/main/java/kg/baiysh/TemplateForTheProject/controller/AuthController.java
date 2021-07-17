@@ -1,12 +1,12 @@
 package kg.baiysh.TemplateForTheProject.controller;
 
-import jdk.jshell.Snippet;
 import kg.baiysh.TemplateForTheProject.config.jwt.JwtProvider;
 import kg.baiysh.TemplateForTheProject.domain.UserEntity;
 import kg.baiysh.TemplateForTheProject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +22,7 @@ public class AuthController {
     public AuthController(UserService userService, JwtProvider jwtProvider) {
         this.userService = userService;
         this.jwtProvider = jwtProvider;
+
     }
 
     @PostMapping("/register")
@@ -46,5 +47,6 @@ public class AuthController {
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
+
 }
 
