@@ -1,7 +1,6 @@
 package kg.baiysh.TemplateForTheProject.security.config;
 
 import kg.baiysh.TemplateForTheProject.security.jwt.JwtFilter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;

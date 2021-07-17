@@ -1,10 +1,9 @@
 package kg.baiysh.TemplateForTheProject.security;
 
-import kg.baiysh.TemplateForTheProject.security.jwt.JwtProvider;
 import kg.baiysh.TemplateForTheProject.domain.UserEntity;
+import kg.baiysh.TemplateForTheProject.security.jwt.JwtProvider;
 import kg.baiysh.TemplateForTheProject.service.UserService;
 import kg.baiysh.TemplateForTheProject.validation.ToDoValidationError;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

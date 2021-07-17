@@ -3,6 +3,7 @@ package kg.baiysh.TemplateForTheProject.security.jwt;
 import kg.baiysh.TemplateForTheProject.security.CustomUserDetails;
 import kg.baiysh.TemplateForTheProject.security.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -22,11 +23,11 @@ public class JwtFilter extends GenericFilterBean {
 
     public static final String AUTHORIZATION = "Authorization";
 
-    @Autowired
-    private CustomUserDetailsService customUserDetailsService;
+    private final CustomUserDetailsService customUserDetailsService;
     private final JwtProvider jwtProvider;
 
-    public JwtFilter(JwtProvider jwtProvider) {
+    public JwtFilter(@Lazy CustomUserDetailsService customUserDetailsService, JwtProvider jwtProvider) {
+        this.customUserDetailsService = customUserDetailsService;
         this.jwtProvider = jwtProvider;
     }
 
